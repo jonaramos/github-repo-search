@@ -1,0 +1,6 @@
+<p *ngIf="!empty; else emptyComments">
+  {{keys.user}} <i>"{{keys.body}}"</i>
+</p>
+<p #emptyComments>
+  Repository seems to have no comments yet.
+</p>
