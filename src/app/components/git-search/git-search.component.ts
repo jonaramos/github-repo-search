@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { GitSearchService } from '../services/git-search.service';
-import { SearchModel } from '../models/search-model';
-import { RepoSearchResult } from '../models/repo-search-result';
-import { RepoComments } from '../models/repo-comments';
+import { GitSearchService } from '../../services/git-search.service';
+import { SearchModel } from '../../models/search-model';
+import { RepoSearchResult } from '../../models/repo-search-result';
+import { RepoComment } from '../../models/repo-comment';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog.component';
 
@@ -17,7 +17,6 @@ export class GitSearchComponent implements OnInit {
   displayQuery: string;
   title: string;
   searchResults: RepoSearchResult;
-  emptyComments: boolean;
 
   model = new SearchModel('', '', '', null, null, '');
   modelKeys = Object.keys(this.model);
@@ -27,7 +26,6 @@ export class GitSearchComponent implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
   getRepos(): void {
@@ -38,12 +36,11 @@ export class GitSearchComponent implements OnInit {
     });
   }
 
-  async getComments(commentsUrl: string): Promise<RepoComments[]> {
+  async getComments(commentsUrl: string): Promise<RepoComment[]> {
     commentsUrl = commentsUrl.substring(0, commentsUrl.lastIndexOf('comments') + 8);
     try {
       return await this.gitSearchService.getRepoComments(commentsUrl);
     } catch {
-      this.emptyComments = true;
       return [];
     }
   }
@@ -72,19 +69,11 @@ export class GitSearchComponent implements OnInit {
 
   async openDialog(commentsUrl: string): Promise<void> {
     const comments = await this.getComments(commentsUrl);
-    if (this.emptyComments) {
-      this.dialogRef = this.dialog.open(DialogComponent, {
-        data: {
-          content: '<p>Repository seems to have no comments yet.</p>'
-        }
-      });
-    } else {
-      this.dialogRef = this.dialog.open(DialogComponent, {
-        data: {
-          content: comments.map( comment => `<p><strong>${comment.user.login}</strong> - "${comment.body}"</p>`).join('')
-        }
-      });
-    }
+    this.dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        comments: comments
+      }
+    });
   }
 
 }

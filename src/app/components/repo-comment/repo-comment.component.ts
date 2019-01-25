@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { RepoComments } from '../models/repo-comments';
+import { RepoComment } from '../../models/repo-comment';
 
 @Component({
   selector: 'app-repo-comment',
@@ -7,9 +7,6 @@ import { RepoComments } from '../models/repo-comments';
   styleUrls: ['./repo-comment.component.css']
 })
 export class RepoCommentComponent {
-
-  @Input() keys: RepoComments;
-  @Input() empty: boolean;
-
+  @Input() comment: RepoComment;
   constructor() { }
 }

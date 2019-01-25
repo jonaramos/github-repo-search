@@ -1,4 +1,4 @@
-export interface RepoComments {
+export interface RepoComment {
     url: string;
     html_url: string;
     id: number;
