@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Comments</h1>
+<mat-dialog-content>
+  <ng-container *ngIf="!emptyComments; else noComments">
+    <div *ngFor="let comment of comments">
+      <app-repo-comment [comment]="comment"></app-repo-comment>
+    </div>
+  </ng-container>
+  <ng-template #noComments>
+    <p>Repository seems to have no comments yet.</p>
+  </ng-template>
+</mat-dialog-content>

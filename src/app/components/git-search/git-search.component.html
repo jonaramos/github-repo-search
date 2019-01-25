@@ -1,0 +1,14 @@
+<div style="text-align:center">
+  <h1>{{title}}</h1>
+  <input type="text" name="searchInput" placeholder="Enter the name of the repo" [(ngModel)]="model.q" required>
+  <form #searchForm="ngForm" (ngSubmit)="sendQuery()">
+    <button type="submit" id="searchButton" [disabled]=!searchForm.valid>Submit</button>
+  </form>
+</div>
+<div *ngIf="searchResults; else noResults">
+  <h3>Results: {{searchResults.total_count}}</h3>
+  <div *ngFor="let repoItem of searchResults.items">
+    <app-repo [keys]="repoItem" (click)="openDialog(repoItem.comments_url)"></app-repo>
+  </div>
+</div>
+<ng-template #noResults></ng-template>

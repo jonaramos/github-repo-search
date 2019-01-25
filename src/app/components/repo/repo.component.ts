@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ItemsEntity } from '../models/repo-search-result';
+import { ItemsEntity } from '../../models/repo-search-result';
 
 @Component({
   selector: 'app-repo',

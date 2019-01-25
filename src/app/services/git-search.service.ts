@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RepoSearchResult } from '../models/repo-search-result';
-import { RepoComments } from '../models/repo-comments';
+import { RepoComment } from '../models/repo-comment';
 const gitHubApiRepoUrl = 'https://api.github.com/search/repositories?q=';
 
 @Injectable({
@@ -32,8 +32,8 @@ export class GitSearchService {
     return await this.http.get(gitHubApiRepoUrl + query).toPromise() as RepoSearchResult;
   }
 
-  public async getRepoComments(commentsUrl: string): Promise<RepoComments[]> {
-    return await this.http.get(commentsUrl).toPromise() as RepoComments[];
+  public async getRepoComments(commentsUrl: string): Promise<RepoComment[]> {
+    return await this.http.get(commentsUrl).toPromise() as RepoComment[];
   }
 
 }
